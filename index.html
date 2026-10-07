@@ -136,6 +136,10 @@ select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--bor
 .maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:var(--icon-filter)}
 .maplibregl-ctrl-attrib{background:var(--panel)!important;color:var(--muted);font-size:11px}
 .maplibregl-ctrl-attrib a{color:var(--accent)}
+.basemap{position:absolute;top:10px;right:10px;z-index:5;display:flex;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.basemap button{font:inherit;font-size:.82rem;padding:6px 11px;border:0;border-right:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
+.basemap button:last-child{border-right:0}
+.basemap button[aria-pressed="true"]{background:var(--p);color:#fff;font-weight:700}
 .legend{border-top:1px solid var(--line);background:var(--panel);padding:8px 12px;font-size:.78rem;display:flex;flex-wrap:wrap;gap:4px 12px}
 .legend span{display:flex;align-items:center;gap:5px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
@@ -218,6 +222,7 @@ select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--bor
 
   <div class="mapbox">
     <div id="map" role="region" aria-label="停車場限高地圖"></div>
+    <div class="basemap" id="basemap" role="group" aria-label="切換底圖"></div>
     <div class="legend" id="legend"></div>
   </div>
 
@@ -244,7 +249,7 @@ select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--bor
       <li><b>OpenStreetMap 網友標註</b>：少數停車場入口限高來自 OpenStreetMap。跟官方資料重疊的幾座，數字都一致，但仍列為參考等級。</li>
       <li><b>查不到限高資料的停車場（灰點）</b>：台北市、新北市、桃園市、宜蘭縣停車場開放資料、各縣市公有停車場清單與 uTagGO 上的停車場，約 5,000 座。官方和業者都沒有公布這些停車場的限高，所以沒有數字，預設不顯示；想知道附近還有哪些停車場，可以在「顯示項目」打開。實心是室內／地下／立體，空心是平面式（依登記資料或名稱判斷）。</li>
       <li><b>月租專用</b>：台北市、新北市停車場開放資料與宜蘭縣停車場資料的收費說明只有月租、季租或半年租，或嘟嘟房、台灣聯通官網標示只收月租的，預設隱藏，勾選「顯示月租專用停車場」才會出現。</li>
-      <li><b>地圖</b>：底圖是內政部國土測繪中心「臺灣通用電子地圖」開放資料版（政府資料開放授權條款－第 1 版）；放大到街區時改用 OpenStreetMap 街道（© OpenStreetMap 貢獻者，ODbL 授權），地點搜尋用的地標與路名也來自 OpenStreetMap；路名字型 Noto Sans（SIL Open Font License）。</li>
+      <li><b>地圖</b>：「通用」「淡色」「地形」底圖是內政部國土測繪中心「臺灣通用電子地圖」開放資料版（不含等高線／套疊等高線，政府資料開放授權條款－第 1 版），放大到街區時改用 OpenStreetMap 街道；「簡潔」底圖與地點搜尋資料來自 OpenStreetMap（© OpenStreetMap 貢獻者，ODbL 授權）；路名字型 Noto Sans（SIL Open Font License）。</li>
       <li>同一座停車場有好幾個數字時，一律用<b>最低的那個</b>判斷，每個數字和出處都列在卡片上，讓你自己看是哪個入口。</li>
       <li>資料整理日期 <span id="upd"></span>。停車場會改建、換業者，限高也可能變，出發前可以點「來源」再看一次。</li>
     </ul>
@@ -362,7 +367,8 @@ const map=new maplibregl.Map({
   attributionControl:false,
   style:{version:8, glyphs:"glyphs://{fontstack}/{range}",
     sources:{
-      nlsc:{type:"raster",tiles:["https://wmts.nlsc.gov.tw/wmts/EMAP6_OPENDATA/default/GoogleMapsCompatible/{z}/{y}/{x}"],tileSize:256,maxzoom:15},
+      nlsc6:{type:"raster",tiles:["https://wmts.nlsc.gov.tw/wmts/EMAP6_OPENDATA/default/GoogleMapsCompatible/{z}/{y}/{x}"],tileSize:256,maxzoom:15},
+      nlsc5:{type:"raster",tiles:["https://wmts.nlsc.gov.tw/wmts/EMAP5_OPENDATA/default/GoogleMapsCompatible/{z}/{y}/{x}"],tileSize:256,maxzoom:15},
       towns:{type:"geojson",data:base+"towns.geojson"},
       lines:{type:"geojson",data:base+"lines.geojson"},
       major:{type:"geojson",data:base+"roads_major.geojson"},
@@ -374,21 +380,22 @@ const map=new maplibregl.Map({
     },
     layers:[
       {id:"bg",type:"background",paint:{"background-color":C("--map")}},
-      {id:"nlsc",type:"raster",source:"nlsc",maxzoom:16.2,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],15.4,1,16.2,0],"raster-brightness-max":DARK?0.72:1,"raster-saturation":DARK?-0.35:0}},
-      {id:"town-fill",type:"fill",source:"towns",minzoom:15.3,paint:{"fill-color":C("--land"),"fill-opacity":["interpolate",["linear"],["zoom"],15.3,0,16,1]}},
-      {id:"town-line",minzoom:15.3,type:"line",source:"towns",paint:{"line-color":C("--border"),"line-width":["interpolate",["linear"],["zoom"],9,.6,14,1.4],"line-dasharray":[3,2]}},
-      {id:"river",minzoom:15.3,type:"line",source:"lines",filter:["==",["get","t"],"w"],paint:{"line-color":C("--water"),"line-width":["interpolate",["linear"],["zoom"],9,1.2,15,6]}},
-      {id:"d-minor-case",minzoom:15.3,type:"line",source:"detail",filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],13,2.2,17,11]}},
-      {id:"d-minor",minzoom:15.3,type:"line",source:"detail",filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road"),"line-width":["interpolate",["linear"],["zoom"],12,.6,13,1.4,17,9]}},
-      {id:"d-mid-case",minzoom:15.3,type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],11,1.6,17,14]}},
-      {id:"d-mid",minzoom:15.3,type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-mid"),"line-width":["interpolate",["linear"],["zoom"],11,.9,17,12]}},
-      {id:"rail",minzoom:15.3,type:"line",source:"lines",filter:["!=",["get","t"],"w"],paint:{"line-color":C("--rail"),"line-width":["interpolate",["linear"],["zoom"],9,.8,15,2.2],"line-dasharray":[2,1.5]}},
-      {id:"m-case",minzoom:15.3,type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],8,1.2,12,4,17,18]}},
-      {id:"m-fill",minzoom:15.3,type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":["match",["get","k"],0,C("--road-hwy"),1,C("--road-hwy"),C("--road-major")],"line-width":["interpolate",["linear"],["zoom"],8,.6,12,2.6,17,15]}},
-      {id:"lbl-minor",minzoom:15.3,type:"symbol",source:"detail",filter:[">=",["get","k"],5],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],15,10.5,18,13],"text-max-angle":35,"symbol-spacing":260},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.6}},
-      {id:"lbl-mid",minzoom:15.3,type:"symbol",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],13.5,11,18,14],"text-max-angle":35,"symbol-spacing":300},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.8}},
-      {id:"lbl-major",minzoom:15.3,type:"symbol",source:"major",layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],11.5,11,18,15],"text-max-angle":35,"symbol-spacing":350},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":2}},
-      {id:"town-lbl",type:"symbol",source:"towns",maxzoom:0,layout:{"text-field":["get","t"],"text-font":["NotoSansRegular"],"text-size":12,"symbol-placement":"point"},paint:{"text-color":C("--muted"),"text-halo-color":C("--halo"),"text-halo-width":1.5}},
+      {id:"nlsc6",type:"raster",source:"nlsc6",maxzoom:16.2,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],15.4,1,16.2,0],"raster-brightness-max":DARK?0.72:1,"raster-saturation":DARK?-0.35:0}},
+      {id:"nlsc5",type:"raster",source:"nlsc5",maxzoom:16.2,layout:{visibility:"none"},paint:{"raster-opacity":["interpolate",["linear"],["zoom"],15.4,1,16.2,0],"raster-brightness-max":DARK?0.72:1,"raster-saturation":DARK?-0.35:0}},
+      {id:"town-fill",type:"fill",source:"towns",paint:{"fill-color":C("--land")}},
+      {id:"town-line",type:"line",source:"towns",paint:{"line-color":C("--border"),"line-width":["interpolate",["linear"],["zoom"],9,.6,14,1.4],"line-dasharray":[3,2]}},
+      {id:"river",type:"line",source:"lines",filter:["==",["get","t"],"w"],paint:{"line-color":C("--water"),"line-width":["interpolate",["linear"],["zoom"],9,1.2,15,6]}},
+      {id:"d-minor-case",type:"line",source:"detail",minzoom:13,filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],13,2.2,17,11]}},
+      {id:"d-minor",type:"line",source:"detail",minzoom:12,filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road"),"line-width":["interpolate",["linear"],["zoom"],12,.6,13,1.4,17,9]}},
+      {id:"d-mid-case",type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],11,1.6,17,14]}},
+      {id:"d-mid",type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-mid"),"line-width":["interpolate",["linear"],["zoom"],11,.9,17,12]}},
+      {id:"rail",type:"line",source:"lines",filter:["!=",["get","t"],"w"],paint:{"line-color":C("--rail"),"line-width":["interpolate",["linear"],["zoom"],9,.8,15,2.2],"line-dasharray":[2,1.5]}},
+      {id:"m-case",type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],8,1.2,12,4,17,18]}},
+      {id:"m-fill",type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":["match",["get","k"],0,C("--road-hwy"),1,C("--road-hwy"),C("--road-major")],"line-width":["interpolate",["linear"],["zoom"],8,.6,12,2.6,17,15]}},
+      {id:"lbl-minor",type:"symbol",source:"detail",minzoom:14.5,filter:[">=",["get","k"],5],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],15,10.5,18,13],"text-max-angle":35,"symbol-spacing":260},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.6}},
+      {id:"lbl-mid",type:"symbol",source:"detail",minzoom:13,filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],13.5,11,18,14],"text-max-angle":35,"symbol-spacing":300},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.8}},
+      {id:"lbl-major",type:"symbol",source:"major",minzoom:11.5,layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],11.5,11,18,15],"text-max-angle":35,"symbol-spacing":350},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":2}},
+      {id:"town-lbl",type:"symbol",source:"towns",maxzoom:12.5,layout:{"text-field":["get","t"],"text-font":["NotoSansRegular"],"text-size":12,"symbol-placement":"point"},paint:{"text-color":C("--muted"),"text-halo-color":C("--halo"),"text-halo-width":1.5}},
       {id:"dest-fill",type:"fill",source:"dest",filter:["==",["geometry-type"],"Polygon"],paint:{"fill-color":C("--p"),"fill-opacity":.07}},
       {id:"dest-line",type:"line",source:"dest",filter:["==",["geometry-type"],"Polygon"],paint:{"line-color":C("--p"),"line-width":2,"line-dasharray":[3,2]}},
       {id:"unk",type:"circle",source:"unk",minzoom:12,paint:{"circle-radius":["interpolate",["linear"],["zoom"],12,2.5,16,6],"circle-color":["case",["==",["get","f"],1],C("--land"),C("--unk")],"circle-stroke-color":C("--unk"),"circle-stroke-width":1.4,"circle-opacity":.9}},
@@ -399,11 +406,11 @@ const map=new maplibregl.Map({
     ]}
 });
 map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-left");
-map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'底圖 © <a href="https://maps.nlsc.gov.tw/" target="_blank" rel="noopener">內政部國土測繪中心</a> 臺灣通用電子地圖 OpenData（政府資料開放授權條款）｜街區街道與地點搜尋 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 貢獻者</a>（ODbL）'}),"bottom-right");
+map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'底圖 © <a href="https://maps.nlsc.gov.tw/" target="_blank" rel="noopener">內政部國土測繪中心</a> 臺灣通用電子地圖 OpenData（政府資料開放授權條款）｜街道與地點搜尋 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 貢獻者</a>（ODbL）'}),"bottom-right");
 
 const loaded=new Set(), loading=new Set(); let detailFeats=[];
 function wantDetail(){
-  if(map.getZoom()<15) return;
+  if(map.getZoom()<(BASEMAP==="simple"?11.5:15)) return;
   const b=map.getBounds();
   for(const [k,bb] of Object.entries(BBOX)){
     if(loaded.has(k)||loading.has(k)) continue;
@@ -503,7 +510,24 @@ $("m").addEventListener("change",()=>{state.M=parseInt($("m").value,10); render(
 $("q").addEventListener("input",()=>{clearTimeout(t); t=setTimeout(()=>{state.q=$("q").value.trim().toLowerCase(); state.limit=60; render();},200)});
 $("more").addEventListener("click",()=>{state.limit+=60; drawList();});
 
-map.on("load",()=>{ mapReady=true; render(); wantDetail(); });
+const VEC=["town-fill", "town-line", "river", "d-minor-case", "d-minor", "d-mid-case", "d-mid", "rail", "m-case", "m-fill", "lbl-minor", "lbl-mid", "lbl-major", "town-lbl"]; const ZR={};
+let BASEMAP="nlsc6"; try{BASEMAP=localStorage.getItem("hlim-bm")||"nlsc6"}catch(e){} const qbm=new URLSearchParams(location.search).get("bm"); if(qbm) BASEMAP=qbm;
+const BMS=[["nlsc6","通用"],["light","淡色"],["nlsc5","地形"],["simple","簡潔"]];
+function setBasemap(b){
+  BASEMAP=b; try{localStorage.setItem("hlim-bm",b)}catch(e){}
+  const raster=b!=="simple";
+  map.setLayoutProperty("nlsc6","visibility",(b==="nlsc6"||b==="light")?"visible":"none");
+  map.setLayoutProperty("nlsc5","visibility",b==="nlsc5"?"visible":"none");
+  map.setPaintProperty("nlsc6","raster-saturation",b==="light"?-1:(DARK?-0.35:0));
+  map.setPaintProperty("nlsc6","raster-brightness-min",b==="light"&&!DARK?0.28:0);
+  map.setPaintProperty("nlsc6","raster-contrast",b==="light"?-0.25:0);
+  for(const id of VEC){ const z=ZR[id]; if(raster) map.setLayerZoomRange(id,Math.max(z[0],15.3),z[1]); else map.setLayerZoomRange(id,z[0],z[1]); }
+  if(map.getLayer("town-fill")) map.setPaintProperty("town-fill","fill-opacity",raster?["interpolate",["linear"],["zoom"],15.3,0,16,1]:1);
+  $("basemap").innerHTML=BMS.map(([k,n])=>`<button type="button" data-b="${k}" aria-pressed="${k===b}">${n}</button>`).join("");
+  wantDetail();
+}
+$("basemap").addEventListener("click",e=>{const x=e.target.closest("button"); if(x) setBasemap(x.dataset.b);});
+map.on("load",()=>{ for(const id of VEC){ const L=map.getLayer(id); ZR[id]=[L.minzoom||0,L.maxzoom||24]; } setBasemap(BASEMAP); mapReady=true; render(); wantDetail(); });
 // ---- 目的地搜尋（地標與路名索引來自 OpenStreetMap，在頁面內比對，不連外部服務） ----
 let GAZ=null; const loadGaz=()=>GAZ||(GAZ=fetch(base+"gaz.json").then(r=>r.json()));
 const nz=s=>String(s||"").replace(/臺/g,"台").replace(/\s/g,"").toLowerCase();
