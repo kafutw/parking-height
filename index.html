@@ -350,7 +350,7 @@ function unkCard(u){
 }
 
 // ---- 地圖（MapLibre，街道與河川鐵路來自 OpenStreetMap） ----
-const base=location.href.replace(/[#?].*$/,"").replace(/[^/]*$/,"");
+const base="https://cdn.jsdelivr.net/gh/kafutw/parking-height@dcefd6a/";
 const C=k=>css(k);
 const DARK=matchMedia("(prefers-color-scheme: dark)").matches;
 const glyphP=fetch(base+"glyphs.json").then(r=>r.json());
