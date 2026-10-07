@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="輸入車高與目的地，找出台北、新北、基隆、桃園、宜蘭限高夠高、還留有安全空間的停車場。資料整理自停管處、交通部與停車場業者公開資料，每筆附來源。">
+<meta property="og:title" content="北北基桃宜停車場限高">
+<meta property="og:description" content="輸入車高，找出 MPV、休旅車進得去的停車場。每筆附資料來源。">
+<meta property="og:type" content="website">
+<style>html{-webkit-text-size-adjust:100%}*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<title>北北基桃宜停車場限高</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>.maplibregl-map{font:12px/20px Helvetica Neue,Arial,Helvetica,sans-serif;overflow:hidden;position:relative;-webkit-tap-highlight-color:rgb(0 0 0/0)}.maplibregl-canvas{left:0;position:absolute;top:0}.maplibregl-map:fullscreen{height:100%;width:100%}.maplibregl-ctrl-group button.maplibregl-ctrl-compass{touch-action:none}.maplibregl-canvas-container.maplibregl-interactive,.maplibregl-ctrl-group button.maplibregl-ctrl-compass{cursor:grab;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-canvas-container.maplibregl-interactive.maplibregl-track-pointer{cursor:pointer}.maplibregl-canvas-container.maplibregl-interactive:active,.maplibregl-ctrl-group button.maplibregl-ctrl-compass:active{cursor:grabbing}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-canvas-container.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:pinch-zoom}.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan,.maplibregl-canvas-container.maplibregl-touch-zoom-rotate.maplibregl-touch-drag-pan .maplibregl-canvas{touch-action:none}.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures,.maplibregl-canvas-container.maplibregl-touch-drag-pan.maplibregl-cooperative-gestures .maplibregl-canvas{touch-action:pan-x pan-y}.maplibregl-ctrl-bottom-left,.maplibregl-ctrl-bottom-right,.maplibregl-ctrl-top-left,.maplibregl-ctrl-top-right{pointer-events:none;position:absolute;z-index:2}.maplibregl-ctrl-top-left{left:0;top:0}.maplibregl-ctrl-top-right{right:0;top:0}.maplibregl-ctrl-bottom-left{bottom:0;left:0}.maplibregl-ctrl-bottom-right{bottom:0;right:0}.maplibregl-ctrl{clear:both;pointer-events:auto;transform:translate(0)}.maplibregl-ctrl-top-left .maplibregl-ctrl{float:left;margin:10px 0 0 10px}.maplibregl-ctrl-top-right .maplibregl-ctrl{float:right;margin:10px 10px 0 0}.maplibregl-ctrl-bottom-left .maplibregl-ctrl{float:left;margin:0 0 10px 10px}.maplibregl-ctrl-bottom-right .maplibregl-ctrl{float:right;margin:0 10px 10px 0}.maplibregl-ctrl-group{background:#fff;border-radius:4px}.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px rgba(0,0,0,.1)}@media (forced-colors:active){.maplibregl-ctrl-group:not(:empty){box-shadow:0 0 0 2px ButtonText}}.maplibregl-ctrl-group button{background-color:transparent;border:0;box-sizing:border-box;cursor:pointer;display:block;height:29px;outline:0;padding:0;width:29px}.maplibregl-ctrl-group button+button{border-top:1px solid #ddd}.maplibregl-ctrl button .maplibregl-ctrl-icon{background-position:50%;background-repeat:no-repeat;display:block;height:100%;width:100%}@media (forced-colors:active){.maplibregl-ctrl-icon{background-color:transparent}.maplibregl-ctrl-group button+button{border-top:1px solid ButtonText}}.maplibregl-ctrl button::-moz-focus-inner{border:0;padding:0}.maplibregl-ctrl-attrib-button:focus,.maplibregl-ctrl-group button:focus{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl button:disabled{cursor:not-allowed}.maplibregl-ctrl button:disabled .maplibregl-ctrl-icon{opacity:.25}.maplibregl-ctrl button:not(:disabled):hover{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-group button:focus:focus-visible{box-shadow:0 0 2px 2px #0096ff}.maplibregl-ctrl-group button:focus:not(:focus-visible){box-shadow:none}.maplibregl-ctrl-group button:focus:first-child{border-radius:4px 4px 0 0}.maplibregl-ctrl-group button:focus:last-child{border-radius:0 0 4px 4px}.maplibregl-ctrl-group button:focus:only-child{border-radius:inherit}.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M24 16v5.5c0 1.75-.75 2.5-2.5 2.5H16v-1l3-1.5-4-5.5 1-1 5.5 4 1.5-3zM6 16l1.5 3 5.5-4 1 1-4 5.5 3 1.5v1H7.5C5.75 24 5 23.25 5 21.5V16zm7-11v1l-3 1.5 4 5.5-1 1-5.5-4L6 13H5V7.5C5 5.75 5.75 5 7.5 5zm11 2.5c0-1.75-.75-2.5-2.5-2.5H16v1l3 1.5-4 5.5 1 1 5.5-4 1.5 3h1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='M18.5 16c-1.75 0-2.5.75-2.5 2.5V24h1l1.5-3 5.5 4 1-1-4-5.5 3-1.5v-1zM13 18.5c0-1.75-.75-2.5-2.5-2.5H5v1l3 1.5L4 24l1 1 5.5-4 1.5 3h1zm3-8c0 1.75.75 2.5 2.5 2.5H24v-1l-3-1.5L25 5l-1-1-5.5 4L17 5h-1zM10.5 13c1.75 0 2.5-.75 2.5-2.5V5h-1l-1.5 3L5 4 4 5l4 5.5L5 12v1z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-compass .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 29 29'%3E%3Cpath d='m10.5 14 4-8 4 8z'/%3E%3Cpath fill='%23ccc' d='m10.5 16 4 8 4-8z'/%3E%3C/svg%3E")}}.maplibregl-ctrl button.maplibregl-ctrl-terrain .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%23333' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-terrain-enabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='%2333b5e5' viewBox='0 0 22 22'%3E%3Cpath d='m1.754 13.406 4.453-4.851 3.09 3.09 3.281 3.277.969-.969-3.309-3.312 3.844-4.121 6.148 6.886h1.082v-.855l-7.207-8.07-4.84 5.187L6.169 6.57l-5.48 5.965v.871ZM.688 16.844h20.625v1.375H.688Zm0 0'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23333' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23aaa' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-waiting .maplibregl-ctrl-icon{animation:maplibregl-spin 2s linear infinite}@media (forced-colors:active){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23fff' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23999' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e58978' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%2333b5e5' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-background-error .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23e54e33' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E")}.maplibregl-ctrl button.maplibregl-ctrl-geolocate:disabled .maplibregl-ctrl-icon{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='%23666' viewBox='0 0 20 20'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1m0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3Cpath fill='red' d='m14 5 1 1-9 9-1-1z'/%3E%3C/svg%3E")}}@keyframes maplibregl-spin{0%{transform:rotate(0)}to{transform:rotate(1turn)}}a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E");background-repeat:no-repeat;cursor:pointer;display:block;height:23px;margin:0 0 -4px -4px;overflow:hidden;width:88px}a.maplibregl-ctrl-logo.maplibregl-compact{width:14px}@media (forced-colors:active){a.maplibregl-ctrl-logo{background-color:transparent;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}@media (forced-colors:active) and (prefers-color-scheme:light){a.maplibregl-ctrl-logo{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='23' fill='none'%3E%3Cpath fill='%23000' fill-opacity='.4' fill-rule='evenodd' d='M17.408 16.796h-1.827l2.501-12.095h.198l3.324 6.533.988 2.19.988-2.19 3.258-6.533h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.929 5.644h-.098l-2.914-5.644-.757-1.71-.345 1.71zm1.958-3.42-.726 3.663a1.255 1.255 0 0 1-1.232 1.011h-1.827a1.255 1.255 0 0 1-1.229-1.509l2.501-12.095a1.255 1.255 0 0 1 1.23-1.001h.197a1.25 1.25 0 0 1 1.12.685l3.19 6.273 3.125-6.263a1.25 1.25 0 0 1 1.123-.695h.181a1.255 1.255 0 0 1 1.227.991l1.443 6.71a5 5 0 0 1 .314-.787l.009-.016a4.6 4.6 0 0 1 1.777-1.887c.782-.46 1.668-.667 2.611-.667a4.6 4.6 0 0 1 1.7.32l.306.134c.21-.16.474-.256.759-.256h1.694a1.255 1.255 0 0 1 1.212.925 1.255 1.255 0 0 1 1.212-.925h1.711c.284 0 .545.094.755.252.613-.3 1.312-.45 2.075-.45 1.356 0 2.557.445 3.482 1.4q.47.48.763 1.064V4.701a1.255 1.255 0 0 1 1.255-1.255h1.86A1.255 1.255 0 0 1 54.44 4.7v9.194h2.217c.19 0 .37.043.532.118v-4.77c0-.356.147-.678.385-.906a2.42 2.42 0 0 1-.682-1.71c0-.665.267-1.253.735-1.7a2.45 2.45 0 0 1 1.722-.674 2.43 2.43 0 0 1 1.705.675q.318.302.504.683V4.7a1.255 1.255 0 0 1 1.255-1.255h1.744A1.255 1.255 0 0 1 65.812 4.7v3.335a4.8 4.8 0 0 1 1.526-.246c.938 0 1.817.214 2.59.69a4.47 4.47 0 0 1 1.67 1.743v-.98a1.255 1.255 0 0 1 1.256-1.256h1.777c.233 0 .451.064.639.174a3.4 3.4 0 0 1 1.567-.372c.346 0 .861.02 1.285.232a1.25 1.25 0 0 1 .689 1.004 4.7 4.7 0 0 1 .853-.588c.795-.44 1.675-.647 2.61-.647 1.385 0 2.65.39 3.525 1.396.836.938 1.168 2.173 1.168 3.528q-.001.515-.056 1.051a1.255 1.255 0 0 1-.947 1.09l.408.952a1.255 1.255 0 0 1-.477 1.552c-.418.268-.92.463-1.458.612-.613.171-1.304.244-2.049.244-1.06 0-2.043-.207-2.886-.698l-.015-.008c-.798-.48-1.419-1.135-1.818-1.963l-.004-.008a5.8 5.8 0 0 1-.548-2.512q0-.429.053-.843a1.3 1.3 0 0 1-.333-.086l-.166-.004c-.223 0-.426.062-.643.228-.03.024-.142.139-.142.59v3.883a1.255 1.255 0 0 1-1.256 1.256h-1.777a1.255 1.255 0 0 1-1.256-1.256V15.69l-.032.057a4.8 4.8 0 0 1-1.86 1.833 5.04 5.04 0 0 1-2.484.634 4.5 4.5 0 0 1-1.935-.424 1.25 1.25 0 0 1-.764.258h-1.71a1.255 1.255 0 0 1-1.256-1.255V7.687a2.4 2.4 0 0 1-.428.625c.253.23.412.561.412.93v7.553a1.255 1.255 0 0 1-1.256 1.255h-1.843a1.25 1.25 0 0 1-.894-.373c-.228.23-.544.373-.894.373H51.32a1.255 1.255 0 0 1-1.256-1.255v-1.251l-.061.117a4.7 4.7 0 0 1-1.782 1.884 4.77 4.77 0 0 1-2.485.67 5.6 5.6 0 0 1-1.485-.188l.009 2.764a1.255 1.255 0 0 1-1.255 1.259h-1.729a1.255 1.255 0 0 1-1.255-1.255v-3.537a1.255 1.255 0 0 1-1.167.793h-1.679a1.25 1.25 0 0 1-.77-.263 4.5 4.5 0 0 1-1.945.429c-.885 0-1.724-.21-2.495-.632l-.017-.01a5 5 0 0 1-1.081-.836 1.255 1.255 0 0 1-1.254 1.312h-1.81a1.255 1.255 0 0 1-1.228-.99l-.782-3.625-2.044 3.939a1.25 1.25 0 0 1-1.115.676h-.098a1.25 1.25 0 0 1-1.116-.68l-2.061-3.994zM35.92 16.63l.207-.114.223-.15q.493-.356.735-.785l.061-.118.033 1.332h1.678V9.242h-1.694l-.033 1.267q-.133-.329-.526-.658l-.032-.028a3.2 3.2 0 0 0-.668-.428l-.27-.12a3.3 3.3 0 0 0-1.235-.23q-1.136-.001-1.974.493a3.36 3.36 0 0 0-1.3 1.382q-.445.89-.444 2.074 0 1.2.51 2.107a3.8 3.8 0 0 0 1.382 1.381 3.9 3.9 0 0 0 1.893.477q.795 0 1.455-.33zm-2.789-5.38q-.576.675-.575 1.762 0 1.102.559 1.794.576.675 1.645.675a2.25 2.25 0 0 0 .934-.19 2.2 2.2 0 0 0 .468-.29l.178-.161a2.2 2.2 0 0 0 .397-.561q.244-.5.244-1.15v-.115q0-.708-.296-1.267l-.043-.077a2.2 2.2 0 0 0-.633-.709l-.13-.086-.047-.028a2.1 2.1 0 0 0-1.073-.285q-1.052 0-1.629.692zm2.316 2.706c.163-.17.28-.407.28-.83v-.114c0-.292-.06-.508-.15-.68a.96.96 0 0 0-.353-.389.85.85 0 0 0-.464-.127c-.4 0-.56.114-.664.239l-.01.012c-.148.174-.275.45-.275.945 0 .506.122.801.27.99.097.11.266.224.68.224.303 0 .504-.09.687-.269zm7.545 1.705a2.6 2.6 0 0 0 .331.423q.319.33.755.548l.173.074q.65.255 1.49.255 1.02 0 1.844-.493a3.45 3.45 0 0 0 1.316-1.4q.493-.904.493-2.089 0-1.909-.988-2.913-.988-1.02-2.584-1.02-.898 0-1.575.347a3 3 0 0 0-.415.262l-.199.166a3.4 3.4 0 0 0-.64.82V9.242h-1.712v11.553h1.729l-.017-5.134zm.53-1.138q.206.29.48.5l.155.11.053.034q.51.296 1.119.297 1.07 0 1.645-.675.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.435 0-.835.16a2 2 0 0 0-.284.136 2 2 0 0 0-.363.254 2.2 2.2 0 0 0-.46.569l-.082.162a2.6 2.6 0 0 0-.213 1.072v.115q0 .707.296 1.267l.135.211zm.964-.818a1.1 1.1 0 0 0 .367.385.94.94 0 0 0 .476.118c.423 0 .59-.117.687-.23.159-.194.28-.478.28-.95 0-.53-.133-.8-.266-.952l-.021-.025c-.078-.094-.231-.221-.68-.221a1 1 0 0 0-.503.135l-.012.007a.86.86 0 0 0-.335.343c-.073.133-.132.324-.132.614v.115a1.4 1.4 0 0 0 .14.66zm15.7-6.222q.347-.346.346-.856a1.05 1.05 0 0 0-.345-.79 1.18 1.18 0 0 0-.84-.329q-.51 0-.855.33a1.05 1.05 0 0 0-.346.79q0 .51.346.855.345.346.856.346.51 0 .839-.346zm4.337 9.314.033-1.332q.191.403.59.747l.098.081a4 4 0 0 0 .316.224l.223.122a3.2 3.2 0 0 0 1.44.322 3.8 3.8 0 0 0 1.875-.477 3.5 3.5 0 0 0 1.382-1.366q.527-.89.526-2.09 0-1.184-.444-2.073a3.24 3.24 0 0 0-1.283-1.399q-.823-.51-1.942-.51a3.5 3.5 0 0 0-1.527.344l-.086.043-.165.09a3 3 0 0 0-.33.214q-.432.315-.656.707a2 2 0 0 0-.099.198l.082-1.283V4.701h-1.744v12.095zm.473-2.509a2.5 2.5 0 0 0 .566.7q.117.098.245.18l.144.08a2.1 2.1 0 0 0 .975.232q1.07 0 1.645-.675.576-.69.576-1.778 0-1.102-.576-1.777-.56-.691-1.645-.692a2.2 2.2 0 0 0-1.015.235q-.22.113-.415.282l-.15.142a2.1 2.1 0 0 0-.42.594q-.223.479-.223 1.1v.115q0 .705.293 1.26zm2.616-.293c.157-.191.28-.479.28-.967 0-.51-.13-.79-.276-.961l-.021-.026c-.082-.1-.232-.225-.67-.225a.87.87 0 0 0-.681.279l-.012.011c-.154.155-.274.38-.274.807v.115c0 .285.057.499.144.669a1.1 1.1 0 0 0 .367.405c.137.082.28.123.455.123.423 0 .59-.118.686-.23zm8.266-3.013q.345-.13.724-.14l.069-.002q.493 0 .642.099l.247-1.794q-.196-.099-.717-.099a2.3 2.3 0 0 0-.545.063 2 2 0 0 0-.411.148 2.2 2.2 0 0 0-.4.249 2.5 2.5 0 0 0-.485.499 2.7 2.7 0 0 0-.32.581l-.05.137v-1.48h-1.778v7.553h1.777v-3.884q0-.546.159-.943a1.5 1.5 0 0 1 .466-.636 2.5 2.5 0 0 1 .399-.253 2 2 0 0 1 .224-.099zm9.784 2.656.05-.922q0-1.743-.856-2.698-.838-.97-2.584-.97-1.119-.001-2.007.493a3.46 3.46 0 0 0-1.4 1.382q-.493.906-.493 2.106 0 1.07.428 1.975.428.89 1.332 1.432.906.526 2.255.526.973 0 1.668-.185l.044-.012.135-.04q.613-.184.984-.421l-.542-1.267q-.3.162-.642.274l-.297.087q-.51.131-1.3.131-.954 0-1.497-.444a1.6 1.6 0 0 1-.192-.193q-.366-.44-.512-1.234l-.004-.021zm-5.427-1.256-.003.022h3.752v-.138q-.011-.727-.288-1.118a1 1 0 0 0-.156-.176q-.46-.428-1.316-.428-.986 0-1.494.604-.379.45-.494 1.234zm-27.053 2.77V4.7h-1.86v12.095h5.333V15.15zm7.103-5.908v7.553h-1.843V9.242h1.843z'/%3E%3Cpath fill='%23fff' d='m19.63 11.151-.757-1.71-.345 1.71-1.12 5.644h-1.827L18.083 4.7h.197l3.325 6.533.988 2.19.988-2.19L26.839 4.7h.181l2.6 12.095h-1.81l-1.218-5.644-.362-1.71-.658 1.71-2.93 5.644h-.098l-2.913-5.644zm14.836 5.81q-1.02 0-1.893-.478a3.8 3.8 0 0 1-1.381-1.382q-.51-.906-.51-2.106 0-1.185.444-2.074a3.36 3.36 0 0 1 1.3-1.382q.839-.494 1.974-.494a3.3 3.3 0 0 1 1.234.231 3.3 3.3 0 0 1 .97.575q.396.33.527.659l.033-1.267h1.694v7.553H37.18l-.033-1.332q-.279.593-1.02 1.053a3.17 3.17 0 0 1-1.662.444zm.296-1.482q.938 0 1.58-.642.642-.66.642-1.711v-.115q0-.708-.296-1.267a2.2 2.2 0 0 0-.807-.872 2.1 2.1 0 0 0-1.119-.313q-1.053 0-1.629.692-.575.675-.575 1.76 0 1.103.559 1.795.577.675 1.645.675zm6.521-6.237h1.711v1.4q.906-1.597 2.83-1.597 1.596 0 2.584 1.02.988 1.005.988 2.914 0 1.185-.493 2.09a3.46 3.46 0 0 1-1.316 1.399 3.5 3.5 0 0 1-1.844.493q-.954 0-1.662-.329a2.67 2.67 0 0 1-1.086-.97l.017 5.134h-1.728zm4.048 6.22q1.07 0 1.645-.674.577-.69.576-1.762 0-1.119-.576-1.777-.558-.675-1.645-.675-.592 0-1.12.296-.51.28-.822.823-.296.527-.296 1.234v.115q0 .708.296 1.267.313.543.823.855.51.296 1.119.297z'/%3E%3Cpath fill='%23e1e3e9' d='M51.325 4.7h1.86v10.45h3.473v1.646h-5.333zm7.12 4.542h1.843v7.553h-1.843zm.905-1.415a1.16 1.16 0 0 1-.856-.346 1.17 1.17 0 0 1-.346-.856 1.05 1.05 0 0 1 .346-.79q.346-.329.856-.329.494 0 .839.33a1.05 1.05 0 0 1 .345.79 1.16 1.16 0 0 1-.345.855q-.33.346-.84.346zm7.875 9.133a3.17 3.17 0 0 1-1.662-.444q-.723-.46-1.004-1.053l-.033 1.332h-1.71V4.701h1.743v4.657l-.082 1.283q.279-.658 1.086-1.119a3.5 3.5 0 0 1 1.778-.477q1.119 0 1.942.51a3.24 3.24 0 0 1 1.283 1.4q.445.888.444 2.072 0 1.201-.526 2.09a3.5 3.5 0 0 1-1.382 1.366 3.8 3.8 0 0 1-1.876.477zm-.296-1.481q1.069 0 1.645-.675.577-.69.577-1.778 0-1.102-.577-1.776-.56-.691-1.645-.692a2.12 2.12 0 0 0-1.58.659q-.642.641-.642 1.694v.115q0 .71.296 1.267a2.4 2.4 0 0 0 .807.872 2.1 2.1 0 0 0 1.119.313zm5.927-6.237h1.777v1.481q.263-.757.856-1.217a2.14 2.14 0 0 1 1.349-.46q.527 0 .724.098l-.247 1.794q-.149-.099-.642-.099-.774 0-1.416.494-.626.493-.626 1.58v3.883h-1.777V9.242zm9.534 7.718q-1.35 0-2.255-.526-.904-.543-1.332-1.432a4.6 4.6 0 0 1-.428-1.975q0-1.2.493-2.106a3.46 3.46 0 0 1 1.4-1.382q.889-.495 2.007-.494 1.744 0 2.584.97.855.956.856 2.7 0 .444-.05.92h-5.43q.18 1.005.708 1.45.542.443 1.497.443.79 0 1.3-.131a4 4 0 0 0 .938-.362l.542 1.267q-.411.263-1.119.46-.708.198-1.711.197zm1.596-4.558q.016-1.02-.444-1.432-.46-.428-1.316-.428-1.728 0-1.991 1.86z'/%3E%3Cpath d='M5.074 15.948a.484.657 0 0 0-.486.659v1.84a.484.657 0 0 0 .486.659h4.101a.484.657 0 0 0 .486-.659v-1.84a.484.657 0 0 0-.486-.659zm3.56 1.16H5.617v.838h3.017z' style='fill:%23fff;fill-rule:evenodd;stroke-width:1.03600001'/%3E%3Cg style='stroke-width:1.12603545'%3E%3Cpath d='M-9.408-1.416c-3.833-.025-7.056 2.912-7.08 6.615-.02 3.08 1.653 4.832 3.107 6.268.903.892 1.721 1.74 2.32 2.902l-.525-.004c-.543-.003-.992.304-1.24.639a1.87 1.87 0 0 0-.362 1.121l-.011 1.877c-.003.402.104.787.347 1.125.244.338.688.653 1.23.656l4.142.028c.542.003.99-.306 1.238-.641a1.87 1.87 0 0 0 .363-1.121l.012-1.875a1.87 1.87 0 0 0-.348-1.127c-.243-.338-.688-.653-1.23-.656l-.518-.004c.597-1.145 1.425-1.983 2.348-2.87 1.473-1.414 3.18-3.149 3.2-6.226-.016-3.59-2.923-6.684-6.993-6.707m-.006 1.1v.002c3.274.02 5.92 2.532 5.9 5.6-.017 2.706-1.39 4.026-2.863 5.44-1.034.994-2.118 2.033-2.814 3.633-.018.041-.052.055-.075.065q-.013.004-.02.01a.34.34 0 0 1-.226.084.34.34 0 0 1-.224-.086l-.092-.077c-.699-1.615-1.768-2.669-2.781-3.67-1.454-1.435-2.797-2.762-2.78-5.478.02-3.067 2.7-5.545 5.975-5.523m-.02 2.826c-1.62-.01-2.944 1.315-2.955 2.96-.01 1.646 1.295 2.988 2.916 2.999h.002c1.621.01 2.943-1.316 2.953-2.961.011-1.646-1.294-2.988-2.916-2.998m-.005 1.1c1.017.006 1.829.83 1.822 1.89s-.83 1.874-1.848 1.867c-1.018-.006-1.829-.83-1.822-1.89s.83-1.874 1.848-1.868m-2.155 11.857 4.14.025c.271.002.49.305.487.676l-.013 1.875c-.003.37-.224.67-.495.668l-4.14-.025c-.27-.002-.487-.306-.485-.676l.012-1.875c.003-.37.224-.67.494-.668' style='color:%23000;font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:%23000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:evenodd;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:%23000;solid-opacity:1;vector-effect:none;fill:%23000;fill-opacity:.4;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-9.415-.316C-12.69-.338-15.37 2.14-15.39 5.207c-.017 2.716 1.326 4.041 2.78 5.477 1.013 1 2.081 2.055 2.78 3.67l.092.076a.34.34 0 0 0 .225.086.34.34 0 0 0 .227-.083l.019-.01c.022-.009.057-.024.074-.064.697-1.6 1.78-2.64 2.814-3.634 1.473-1.414 2.847-2.733 2.864-5.44.02-3.067-2.627-5.58-5.901-5.601m-.057 8.784c1.621.011 2.944-1.315 2.955-2.96.01-1.646-1.295-2.988-2.916-2.999-1.622-.01-2.945 1.315-2.955 2.96s1.295 2.989 2.916 3' style='clip-rule:evenodd;fill:%23e1e3e9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3Cpath d='M-11.594 15.465c-.27-.002-.492.297-.494.668l-.012 1.876c-.003.371.214.673.485.675l4.14.027c.271.002.492-.298.495-.668l.012-1.877c.003-.37-.215-.672-.485-.674z' style='clip-rule:evenodd;fill:%23fff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.47727823;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.4' transform='translate(15.553 2.85)scale(.88807)'/%3E%3C/g%3E%3C/svg%3E")}}.maplibregl-ctrl.maplibregl-ctrl-attrib{background-color:hsla(0,0%,100%,.5);margin:0;padding:0 5px}@media screen{.maplibregl-ctrl-attrib.maplibregl-compact{background-color:#fff;border-radius:12px;box-sizing:content-box;color:#000;margin:10px;min-height:20px;padding:2px 24px 2px 0;position:relative}.maplibregl-ctrl-attrib.maplibregl-compact-show{padding:2px 28px 2px 8px;visibility:visible}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact-show,.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact-show{border-radius:12px;padding:2px 8px 2px 28px}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-inner{display:none}.maplibregl-ctrl-attrib-button{background-color:hsla(0,0%,100%,.5);background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E");border:0;border-radius:12px;box-sizing:border-box;cursor:pointer;display:none;height:24px;outline:0;position:absolute;right:0;top:0;width:24px}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button{-webkit-appearance:none;-moz-appearance:none;appearance:none;list-style:none}.maplibregl-ctrl-attrib summary.maplibregl-ctrl-attrib-button::-webkit-details-marker{display:none}.maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-top-left .maplibregl-ctrl-attrib-button{left:0}.maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-inner{display:block}.maplibregl-ctrl-attrib.maplibregl-compact-show .maplibregl-ctrl-attrib-button{background-color:rgb(0 0 0/5%)}.maplibregl-ctrl-bottom-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;right:0}.maplibregl-ctrl-top-right>.maplibregl-ctrl-attrib.maplibregl-compact:after{right:0;top:0}.maplibregl-ctrl-top-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{left:0;top:0}.maplibregl-ctrl-bottom-left>.maplibregl-ctrl-attrib.maplibregl-compact:after{bottom:0;left:0}}@media screen and (forced-colors:active){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='%23fff' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}@media screen and (forced-colors:active) and (prefers-color-scheme:light){.maplibregl-ctrl-attrib.maplibregl-compact:after{background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill-rule='evenodd' viewBox='0 0 20 20'%3E%3Cpath d='M4 10a6 6 0 1 0 12 0 6 6 0 1 0-12 0m5-3a1 1 0 1 0 2 0 1 1 0 1 0-2 0m0 3a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0'/%3E%3C/svg%3E")}}.maplibregl-ctrl-attrib a{color:rgba(0,0,0,.75);text-decoration:none}.maplibregl-ctrl-attrib a:hover{color:inherit;text-decoration:underline}.maplibregl-attrib-empty{display:none}.maplibregl-ctrl-scale{background-color:hsla(0,0%,100%,.75);border:2px solid #333;border-top:#333;box-sizing:border-box;color:#333;font-size:10px;padding:0 5px}.maplibregl-popup{display:flex;left:0;pointer-events:none;position:absolute;top:0;will-change:transform}.maplibregl-popup-anchor-top,.maplibregl-popup-anchor-top-left,.maplibregl-popup-anchor-top-right{flex-direction:column}.maplibregl-popup-anchor-bottom,.maplibregl-popup-anchor-bottom-left,.maplibregl-popup-anchor-bottom-right{flex-direction:column-reverse}.maplibregl-popup-anchor-left{flex-direction:row}.maplibregl-popup-anchor-right{flex-direction:row-reverse}.maplibregl-popup-tip{border:10px solid transparent;height:0;width:0;z-index:1}.maplibregl-popup-anchor-top .maplibregl-popup-tip{align-self:center;border-bottom-color:#fff;border-top:none}.maplibregl-popup-anchor-top-left .maplibregl-popup-tip{align-self:flex-start;border-bottom-color:#fff;border-left:none;border-top:none}.maplibregl-popup-anchor-top-right .maplibregl-popup-tip{align-self:flex-end;border-bottom-color:#fff;border-right:none;border-top:none}.maplibregl-popup-anchor-bottom .maplibregl-popup-tip{align-self:center;border-bottom:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip{align-self:flex-start;border-bottom:none;border-left:none;border-top-color:#fff}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip{align-self:flex-end;border-bottom:none;border-right:none;border-top-color:#fff}.maplibregl-popup-anchor-left .maplibregl-popup-tip{align-self:center;border-left:none;border-right-color:#fff}.maplibregl-popup-anchor-right .maplibregl-popup-tip{align-self:center;border-left-color:#fff;border-right:none}.maplibregl-popup-close-button{background-color:transparent;border:0;border-radius:0 3px 0 0;cursor:pointer;position:absolute;right:0;top:0}.maplibregl-popup-close-button:hover{background-color:rgb(0 0 0/5%)}.maplibregl-popup-content{background:#fff;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.1);padding:15px 10px;pointer-events:auto;position:relative}.maplibregl-popup-anchor-top-left .maplibregl-popup-content{border-top-left-radius:0}.maplibregl-popup-anchor-top-right .maplibregl-popup-content{border-top-right-radius:0}.maplibregl-popup-anchor-bottom-left .maplibregl-popup-content{border-bottom-left-radius:0}.maplibregl-popup-anchor-bottom-right .maplibregl-popup-content{border-bottom-right-radius:0}.maplibregl-popup-track-pointer{display:none}.maplibregl-popup-track-pointer *{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.maplibregl-map:hover .maplibregl-popup-track-pointer{display:flex}.maplibregl-map:active .maplibregl-popup-track-pointer{display:none}.maplibregl-marker{left:0;position:absolute;top:0;transition:opacity .2s;will-change:transform}.maplibregl-user-location-dot,.maplibregl-user-location-dot:before{background-color:#1da1f2;border-radius:50%;height:15px;width:15px}.maplibregl-user-location-dot:before{animation:maplibregl-user-location-dot-pulse 2s infinite;content:"";position:absolute}.maplibregl-user-location-dot:after{border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px rgba(0,0,0,.35);box-sizing:border-box;content:"";height:19px;left:-2px;position:absolute;top:-2px;width:19px}@keyframes maplibregl-user-location-dot-pulse{0%{opacity:1;transform:scale(1)}70%{opacity:0;transform:scale(3)}to{opacity:0;transform:scale(1)}}.maplibregl-user-location-dot-stale{background-color:#aaa}.maplibregl-user-location-dot-stale:after{display:none}.maplibregl-user-location-accuracy-circle{background-color:#1da1f233;border-radius:100%;height:1px;width:1px}.maplibregl-crosshair,.maplibregl-crosshair .maplibregl-interactive,.maplibregl-crosshair .maplibregl-interactive:active{cursor:crosshair}.maplibregl-boxzoom{background:#fff;border:2px dotted #202020;height:0;left:0;opacity:.5;position:absolute;top:0;width:0}.maplibregl-cooperative-gesture-screen{align-items:center;background:rgba(0,0,0,.4);color:#fff;display:flex;font-size:1.4em;inset:0;justify-content:center;line-height:1.2;opacity:0;padding:1rem;pointer-events:none;position:absolute;transition:opacity 1s ease 1s;z-index:99999}.maplibregl-cooperative-gesture-screen.maplibregl-show{opacity:1;transition:opacity .05s}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:none}@media (hover:none),(width <= 480px){.maplibregl-cooperative-gesture-screen .maplibregl-desktop-message{display:none}.maplibregl-cooperative-gesture-screen .maplibregl-mobile-message{display:block}}.maplibregl-pseudo-fullscreen{height:100%!important;left:0!important;position:fixed!important;top:0!important;width:100%!important;z-index:99999}</style>
+<style>
+/* 版面：上方查詢列（車高＋安全空間＋縣市），中間地圖，下方清單；手機上全部單欄 */
+:root{
+  --bg:#f3f5f8; --panel:#ffffff; --fg:#14202e; --muted:#5a6878; --line:#dce2ea; --map:#e9edf2; --land:#fbfcfd; --border:#b8c2cf; --p:#0a5bb5; --navy:#0f2338;
+  --no:#c62828; --no-bg:#fde7e6; --maybe:#d9480f; --maybe-bg:#fff0e6; --mech:#8e24aa; --mech-bg:#f6e8f9;
+  --tight:#a86b00; --tight-bg:#fff4d6; --ok:#2e7d4f; --ok-bg:#e3f3ea; --unk:#7b8784; --unk-bg:#eceff0; --road:#1f5f99;
+  --accent:#0a5bb5; --water:#a9cde3; --road:#ffffff; --road-mid:#fff6d9; --road-major:#ffe08a; --road-hwy:#f6a96b; --road-case:#c7cfcb; --rail:#8a948f; --label:#2b3330; --halo:#ffffff; --road-pin:#1f5f99; --pin-edge:#ffffff; --icon-filter:none;
+  --f-num:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141c; --panel:#16202b; --fg:#e6edf5; --muted:#9aa9bb; --line:#263343; --map:#132030; --land:#1b2733; --border:#3a4a5d; --p:#4c95e8; --navy:#0a1622;
+  --no:#ff7b72; --no-bg:#3b1715; --maybe:#ff9e64; --maybe-bg:#3a2112; --mech:#d58ae6; --mech-bg:#33193a;
+  --tight:#f0c04f; --tight-bg:#3a2f0e; --ok:#63c98d; --ok-bg:#15301f; --unk:#8d9996; --unk-bg:#262e2d; --accent:#4c95e8; --water:#1f3f5c; --road:#2f3d4c; --road-mid:#3b4655; --road-major:#5c5636; --road-hwy:#6e4a33; --road-case:#1f2a36; --rail:#66778a; --label:#dce5ef; --halo:#0e141c; --road-pin:#79b4ea; --pin-edge:#0e141c; --icon-filter:invert(1);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141c; --panel:#16202b; --fg:#e6edf5; --muted:#9aa9bb; --line:#263343; --map:#132030; --land:#1b2733; --border:#3a4a5d; --p:#4c95e8; --navy:#0a1622;
+  --no:#ff7b72; --no-bg:#3b1715; --maybe:#ff9e64; --maybe-bg:#3a2112; --mech:#d58ae6; --mech-bg:#33193a;
+  --tight:#f0c04f; --tight-bg:#3a2f0e; --ok:#63c98d; --ok-bg:#15301f; --unk:#8d9996; --unk-bg:#262e2d; --accent:#4c95e8; --water:#1f3f5c; --road:#2f3d4c; --road-mid:#3b4655; --road-major:#5c5636; --road-hwy:#6e4a33; --road-case:#1f2a36; --rail:#66778a; --label:#dce5ef; --halo:#0e141c; --road-pin:#79b4ea; --pin-edge:#0e141c; --icon-filter:invert(1);
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:22px 48px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:clamp(1.45rem,3.6vw,2rem);margin:0;line-height:1.25;text-wrap:balance}
+h2{font-size:1.1rem;margin:0 0 8px}
+p{margin:0}
+.lede{color:var(--muted);max-width:70ch}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.topbar{background:var(--navy);color:#fff;border-radius:12px;padding:18px 20px;display:flex;gap:16px;align-items:center}
+.topbar h1{color:#fff;font-size:clamp(1.35rem,3.4vw,1.9rem)}
+.topbar p{color:#c3d1e2;font-size:.92rem;margin-top:4px;max-width:70ch}
+.topt{min-width:0}
+.pbadge{width:52px;height:52px;border-radius:10px;background:var(--p);color:#fff;font-family:var(--f-num);font-weight:700;font-size:2.2rem;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:inset 0 0 0 3px rgba(255,255,255,.9)}
+@media (max-width:520px){.pbadge{width:40px;height:40px;font-size:1.7rem}.topbar{padding:14px 16px}}
+.warn{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:10px 14px;font-size:.9rem}
+.warn b{color:var(--fg)}
+.controls .dest{grid-column:1/-1}
+.drow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dbox{position:relative;flex:1 1 280px;min-width:0}
+#dq{font:inherit;width:100%;padding:9px 12px;border-radius:8px;border:2px solid var(--p);background:var(--panel);color:var(--fg);box-sizing:border-box}
+.sug{position:absolute;z-index:1100;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);max-height:320px;overflow:auto}
+.sug li{padding:7px 10px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.sug li:hover,.sug li[aria-selected="true"]{background:var(--bg)}
+.sug li small{color:var(--muted);white-space:nowrap}
+.sug .none{color:var(--muted);cursor:default}
+.dnote{font-size:.82rem;color:var(--muted);margin:2px 0 0}
+.dnote b{color:var(--p)}
+#dpick[aria-pressed="true"]{background:var(--p);color:#fff;border-color:var(--p)}
+.dist{font-size:.82rem;color:var(--p);font-weight:700}
+.chip[aria-pressed="true"]{background:var(--p)!important;border-color:var(--p)!important;color:#fff!important}
+
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:auto auto 1fr;gap:14px 24px;align-items:end}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label,.field .lab{font-size:.82rem;color:var(--muted);font-weight:500;letter-spacing:.02em}
+.hrow{display:flex;align-items:center;gap:8px}
+#h{font-family:var(--f-num);font-size:2rem;font-weight:700;width:5.2ch;padding:2px 8px;border:2px solid var(--fg);border-radius:8px;background:var(--panel);color:var(--fg);text-align:center}
+.unit{font-size:1rem;color:var(--muted);white-space:nowrap}
+select{font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--fg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:.88rem;padding:4px 11px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.layers{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.9rem;color:var(--muted)}
+.layers label{display:flex;align-items:center;gap:6px;cursor:pointer}
+@media (max-width:760px){.controls{grid-template-columns:1fr 1fr}.controls .field.c{grid-column:1/-1}}
+@media (max-width:480px){.controls{grid-template-columns:1fr}select{width:100%}}
+
+.filters{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.filters .fhead{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.filters h2{margin:0;font-size:1rem}
+.quick{display:flex;flex-wrap:wrap;gap:6px}
+.qb{font:inherit;font-size:.82rem;padding:4px 11px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer}
+.qb:hover{color:var(--fg);border-color:var(--fg)}
+.qb[aria-current="true"]{border-color:var(--p);color:var(--p);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.tile{font:inherit;text-align:left;border:2px solid transparent;border-radius:10px;padding:10px 12px;background:var(--cb);color:var(--fg);cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile .t{font-weight:700;display:flex;align-items:center;gap:7px;line-height:1.35}
+.tile .d{font-size:.78rem;color:var(--muted);line-height:1.4}
+.tile[aria-pressed="true"]{border-color:var(--c)}
+.tile[aria-pressed="false"]{background:var(--panel);border-color:var(--line);opacity:.62}
+.ck{width:16px;height:16px;border-radius:4px;border:2px solid var(--c);display:inline-flex;align-items:center;justify-content:center;font-size:11px;line-height:1;color:var(--panel);flex:none}
+.tile[aria-pressed="true"] .ck{background:var(--c)}
+.lyrow{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.88rem;border-top:1px solid var(--line);padding-top:10px}
+.lyb{font:inherit;background:none;border:0;color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:2px 0;text-align:left}
+.lyb .ck{--c:var(--fg)}
+.lyb[aria-pressed="true"] .ck{background:var(--fg)}
+.lyb small{color:var(--muted)}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.filter{position:relative}
+.fbtn{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:700;user-select:none}
+.fbtn::-webkit-details-marker{display:none}
+.fsel{font-weight:500;font-size:.85rem;opacity:.85}
+.filter[open] .caret{transform:rotate(180deg)}
+.fpanel{position:absolute;z-index:1000;top:calc(100% + 8px);left:0;width:min(380px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.18);padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+.fhead{font-size:.78rem;color:var(--muted);font-weight:700;letter-spacing:.04em;margin:8px 0 2px}
+.fopt{display:flex;align-items:flex-start;gap:9px;padding:7px 6px;border-radius:6px;cursor:pointer}
+.fopt:hover{background:var(--bg)}
+.fopt input{margin-top:4px;flex:none;width:17px;height:17px;accent-color:var(--fg)}
+.fopt .dot{margin-top:5px}
+.fopt span{display:flex;flex-direction:column;min-width:0}
+.fopt small{color:var(--muted);font-size:.8rem;line-height:1.45}
+.fopt .n{margin-left:auto;font-family:var(--f-num);font-weight:700;font-size:1.05rem;flex:none}
+.sumline{font-size:.92rem;color:var(--muted);margin:0}
+.sumline b{font-family:var(--f-num);font-size:1.15rem;margin-right:2px}
+.s-no{background:var(--no-bg)} .s-no .k{color:var(--no)}
+.s-maybe{background:var(--maybe-bg)} .s-maybe .k{color:var(--maybe)}
+.s-mech{background:var(--mech-bg)} .s-mech .k{color:var(--mech)}
+.s-tight{background:var(--tight-bg)} .s-tight .k{color:var(--tight)}
+.s-ok{background:var(--ok-bg)} .s-ok .k{color:var(--ok)}
+
+
+.mapbox{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--map)}
+#map{height:min(62vh,620px);min-height:360px;background:var(--map)}
+.maplibregl-map{font-family:var(--f-body)}
+.maplibregl-popup-content{background:var(--panel);color:var(--fg);padding:0;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,.25);max-height:60vh;overflow:auto}
+.maplibregl-popup-content .item{border:0}
+.maplibregl-popup-tip{border-top-color:var(--panel)!important;border-bottom-color:var(--panel)!important}
+.maplibregl-popup-close-button{color:var(--muted);font-size:20px;right:4px;top:2px}
+.maplibregl-ctrl-group{background:var(--panel)}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:var(--icon-filter)}
+.maplibregl-ctrl-attrib{background:var(--panel)!important;color:var(--muted);font-size:11px}
+.maplibregl-ctrl-attrib a{color:var(--accent)}
+.legend{border-top:1px solid var(--line);background:var(--panel);padding:8px 12px;font-size:.78rem;display:flex;flex-wrap:wrap;gap:4px 12px}
+.legend span{display:flex;align-items:center;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.tri{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--road);display:inline-block}
+
+.listhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+#q{font:inherit;padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--fg);min-width:0;width:min(320px,100%)}
+.count{color:var(--muted);font-size:.9rem}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:10px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.item .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.item h3{font-size:1rem;margin:0;line-height:1.35}
+.item .meta{font-size:.82rem;color:var(--muted)}
+.lim{font-family:var(--f-num);font-weight:700;font-size:1.5rem;line-height:1;white-space:nowrap;text-align:right}
+.lim small{font-size:.8rem;font-weight:600;color:var(--muted);display:block}
+.pill{display:inline-block;font-size:.8rem;font-weight:700;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.p-no{background:var(--no-bg);color:var(--no)} .p-maybe{background:var(--maybe-bg);color:var(--maybe)} .p-mech{background:var(--mech-bg);color:var(--mech)}
+.p-tight{background:var(--tight-bg);color:var(--tight)} .p-ok{background:var(--ok-bg);color:var(--ok)} .p-unk{background:var(--unk-bg);color:var(--unk)}
+.srcs{list-style:none;margin:0;padding:0;font-size:.82rem;display:flex;flex-direction:column;gap:3px}
+.srcs li{display:flex;gap:6px;align-items:baseline}
+.srcs .v{font-family:var(--f-num);font-weight:700;min-width:3.2em;text-align:right;flex:none}
+.srcs .w{min-width:0;color:var(--muted)}
+.srcs a{color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem}
+.links a{color:var(--accent)}
+.more{font:inherit;font-size:.9rem;padding:8px 16px;border-radius:999px;border:1px solid var(--border);background:var(--panel);color:var(--fg);cursor:pointer;justify-self:center}
+.notes{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.notes ul{margin:0;padding-left:1.2em;display:grid;gap:6px;max-width:80ch}
+.notes a{color:var(--accent)}
+.empty{color:var(--muted);padding:12px 2px}
+</style>
+
+<div class="wrap">
+  <header class="topbar">
+    <span class="pbadge" aria-hidden="true">P</span>
+    <div class="topt">
+      <h1>北北基桃宜停車場限高</h1>
+      <p>輸入車高，找出限高夠高、還留有安全空間的停車場。涵蓋台北、新北、基隆、桃園、宜蘭，每一筆都附資料來源。</p>
+    </div>
+  </header>
+
+  <p class="warn"><b>現場限高標誌最準。</b>這裡的數字整理自停管處、交通部與停車場業者公開的資料，停車場改建或換業者時可能會變；看到限高桿比車頂低，就不要硬開。</p>
+
+  <section class="controls" aria-label="查詢條件">
+    <div class="field dest">
+      <label for="dq">要去哪裡？（地標、車站、醫院、路名）</label>
+      <div class="drow">
+        <div class="dbox"><input id="dq" type="search" placeholder="例如：大葉高島屋、台北車站、中山北路六段" autocomplete="off" aria-autocomplete="list" aria-controls="dsug"><ul id="dsug" class="sug" role="listbox" hidden></ul></div>
+        <select id="dr" aria-label="搜尋範圍"><option value="500">方圓 500 公尺</option><option value="1000" selected>方圓 1 公里</option><option value="2000">方圓 2 公里</option></select>
+        <button id="dpick" class="qb" type="button">在地圖上點選</button>
+        <button id="dclear" class="qb" type="button" hidden>清除目的地</button>
+      </div>
+      <p class="dnote" id="dnote">還沒選目的地時，會顯示五縣市全部的停車場。門牌地址沒辦法精準定位，可以輸入路名，或直接在地圖上點選。</p>
+    </div>
+    <div class="field">
+      <label for="h">我的車高（含車頂架、車頂箱）</label>
+      <div class="hrow"><input id="h" type="number" inputmode="numeric" min="120" max="400" step="1" value="180"><span class="unit">公分</span></div>
+    </div>
+    <div class="field">
+      <label for="m">安全空間</label>
+      <select id="m">
+        <option value="0">不留</option>
+        <option value="5">5 公分</option>
+        <option value="10" selected>10 公分（建議）</option>
+        <option value="15">15 公分</option>
+        <option value="20">20 公分</option>
+      </select>
+    </div>
+    <div class="field c">
+      <span class="lab">縣市</span>
+      <div class="chips" id="cty"></div>
+    </div>
+  </section>
+
+  <section class="filters" aria-label="顯示項目">
+    <div class="fhead"><h2>顯示項目</h2><div class="quick" id="quick"></div></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="lyrow" id="layers"></div>
+  </section>
+
+  <div class="mapbox">
+    <div id="map" role="region" aria-label="停車場限高地圖"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:10px">
+    <div class="listhead">
+      <h2 id="listTitle">清單</h2>
+      <input id="q" type="search" placeholder="搜尋停車場名稱、路名、行政區" aria-label="搜尋">
+    </div>
+    <p class="count" id="count"></p>
+    <div class="list" id="list"></div>
+    <button class="more" id="more" type="button" hidden>再顯示 60 筆</button>
+  </section>
+
+  <section class="notes">
+    <h2>資料怎麼來的</h2>
+    <ul>
+      <li><b>停管處限高表</b>：臺北市停車管理工程處〈臺北市公有停車場出入口限高一覽表〉115 年 3 月 3 日版，逐個出入口列出限高（公分）。表上註明「限高仍以現場標誌為準」。</li>
+      <li><b>交通部 TDX</b>：運輸資料流通服務平臺的臺北市路外停車場出入口資料（MaxAllowedHeight）。這份跟停管處表常常差 10 公分，所以兩份都列出來，取比較低的判斷。</li>
+      <li><b>嘟嘟房、台灣聯通官網</b>：業者官網每座停車場的限高或「場地限高」欄位；嘟嘟房另有「是否可停休旅車」。</li>
+      <li><b>uTagGO</b>：遠通電收停車平台每座停車場的限高欄位，涵蓋俥亭、日月亭、好停、力揚等業者。跟停管處表對照，56 座裡 51 座數字一樣。</li>
+      <li><b>場館官網、其他官方文件</b>：百貨、醫院、車站官網，以及停管處招標文件、社會住宅住戶手冊裡寫的限高。</li>
+      <li><b>道路限高</b>：新北市交通局〈新北市交通限高資訊〉的限高標誌；台北市工務局的地下道結構淨高與隧道限高（地下道那一項是結構高度，不是限高牌）；以及 OpenStreetMap 網友標在道路、橋下、限高桿上的限高（桃園、基隆、宜蘭的道路限高主要來自這裡，未經官方確認）。</li>
+      <li><b>街景判讀</b>：官方與業者都沒公布、但入口限高牌在 Google 街景上看得清楚的停車場，人工讀出牌面數字後記下，只收數字、不放街景圖片。等級排在官方與業者資料之後，現場若已換牌，以現場為準。</li>
+      <li><b>OpenStreetMap 網友標註</b>：少數停車場入口限高來自 OpenStreetMap。跟官方資料重疊的幾座，數字都一致，但仍列為參考等級。</li>
+      <li><b>查不到限高資料的停車場（灰點）</b>：台北市、新北市、桃園市、宜蘭縣停車場開放資料、各縣市公有停車場清單與 uTagGO 上的停車場，約 5,000 座。官方和業者都沒有公布這些停車場的限高，所以沒有數字，預設不顯示；想知道附近還有哪些停車場，可以在「顯示項目」打開。實心是室內／地下／立體，空心是平面式（依登記資料或名稱判斷）。</li>
+      <li><b>月租專用</b>：台北市、新北市停車場開放資料與宜蘭縣停車場資料的收費說明只有月租、季租或半年租，或嘟嘟房、台灣聯通官網標示只收月租的，預設隱藏，勾選「顯示月租專用停車場」才會出現。</li>
+      <li><b>地圖</b>：底圖是內政部國土測繪中心「臺灣通用電子地圖」開放資料版（政府資料開放授權條款－第 1 版）；放大到街區時改用 OpenStreetMap 街道（© OpenStreetMap 貢獻者，ODbL 授權），地點搜尋用的地標與路名也來自 OpenStreetMap；路名字型 Noto Sans（SIL Open Font License）。</li>
+      <li>同一座停車場有好幾個數字時，一律用<b>最低的那個</b>判斷，每個數字和出處都列在卡片上，讓你自己看是哪個入口。</li>
+      <li>資料整理日期 <span id="upd"></span>。停車場會改建、換業者，限高也可能變，出發前可以點「來源」再看一次。</li>
+    </ul>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
+<script>
+const COUNTIES=["台北市","新北市","基隆市","桃園市","宜蘭縣"];
+const CKEY={"台北市":"tp","新北市":"ntpc","基隆市":"kl","桃園市":"ty","宜蘭縣":"yl"};
+const BBOX={tp:[121.45753,24.96443,121.66592,25.1918],ntpc:[121.27238,24.77467,122.0035,25.29779],ty:[120.98553,24.64177,121.44494,25.11953],kl:[121.62883,25.05459,121.80316,25.17514],yl:[121.3525,24.31079,121.96522,24.98417]};
+const ST={no:"進不去",maybe:"有入口或來源寫進不去",mech:"機械車位進不去",tight:"空間不夠安全",ok:"進得去",unk:"查不到限高資料"};
+const ORDER=["ok","no","maybe","mech","tight"];
+const HINT={no:"所有來源的限高都比你的車低或一樣高",maybe:"某個入口比較低，或兩份資料的數字不一樣",mech:"平面車位可能可以停，機械車位停不進去",tight:"進得去，但剩下的空間比你設定的安全空間少",ok:"限高夠高，還留有你設定的安全空間"};
+const state={H:180,M:10,cty:new Set(COUNTIES),show:new Set(["ok"]),q:"",limit:60,road:false,unk:false,rent:false,dest:null,R:1000,picking:false};
+try{const v=JSON.parse(localStorage.getItem("hlim")||"null"); if(v){state.H=v.H||180; state.M=v.M??10;}}catch(e){}
+const $=id=>document.getElementById(id);
+$("h").value=state.H; $("m").value=String(state.M);
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const cm=v=>Math.round(v*100);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=v=>v.toFixed(2).replace(/0$/,"");
+let D=null;
+
+function status(l){
+  const H=state.H, M=state.M;
+  const hs=l.s.filter(x=>x[1]).map(x=>cm(x[1])), ms=l.s.filter(x=>x[2]).map(x=>cm(x[2]));
+  if(hs.length){
+    const lo=Math.min(...hs), hi=Math.max(...hs);
+    if(hi<=H) return "no";
+    if(lo<=H) return "maybe";
+    if(ms.length && Math.min(...ms)<=H) return "mech";
+    if(lo-H<M) return "tight";
+    return "ok";
+  }
+  if(ms.length){ const lo=Math.min(...ms); if(lo<=H) return "mech"; if(lo-H<M) return "tight"; return "ok"; }
+  if(l.f) return "maybe";
+  return "ok";
+}
+function roadStatus(r){ const v=cm(r[2]); if(v<=state.H) return "no"; if(v-state.H<state.M) return "tight"; return "ok"; }
+function isRent(l){ return l.r && l.r[0]===1 }
+function lowText(l){
+  const hs=l.s.filter(x=>x[1]).map(x=>x[1]), ms=l.s.filter(x=>x[2]).map(x=>x[2]);
+  if(hs.length) return {v:fmt(Math.min(...hs)), sub:"最低入口"};
+  if(ms.length) return {v:fmt(Math.min(...ms)), sub:"機械車位"};
+  return {v:"—", sub:"未標數字"};
+}
+function srcList(l){
+  return l.s.map(x=>{
+    const val=x[1]?`${fmt(x[1])} m`:(x[2]?`${fmt(x[2])} m`:"—");
+    const kind=x[2]&&!x[1]?"（機械車位）":"";
+    return `<li><span class="v">${val}</span><span class="w">${esc(D.src[x[0]])}${kind}${x[3]?"｜"+esc(x[3]):""} <a href="${esc(x[4])}" target="_blank" rel="noopener">來源</a></span></li>`;
+  }).join("") + (l.f?`<li><span class="v">—</span><span class="w">嘟嘟房官網標示「不可停休旅車」</span></li>`:"");
+}
+function rentLine(l){
+  if(!l.r||!l.r[0]) return "";
+  if(l.r[0]===1) return `<li><span class="v">月租</span><span class="w">${esc(l.r[1])}寫的收費只有月租：「${esc(l.r[3])}」</span></li>`;
+  return `<li><span class="v">月租?</span><span class="w">${esc(l.r[1])}只寫月租，但 uTagGO 有收錄，可能也收臨停</span></li>`;
+}
+function hav(a1,o1,a2,o2){const R=6371000,p=Math.PI/180,x=Math.sin((a2-a1)*p/2)**2+Math.cos(a1*p)*Math.cos(a2*p)*Math.sin((o2-o1)*p/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+function dTo(la,ln){return state.dest?hav(state.dest.lat,state.dest.lng,la,ln):null}
+function dTxt(la,ln){const d=dTo(la,ln); if(d==null) return ""; return `<span class="dist">距離目的地 ${d<1000?Math.round(d/10)*10+" 公尺":(d/1000).toFixed(1)+" 公里"}</span>`}
+function gm(la,ln){return `https://www.google.com/maps/search/?api=1&query=${la},${ln}`}
+function sv(la,ln){return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${la},${ln}`}
+function gap(l){
+  const hs=l.s.filter(x=>x[1]).map(x=>cm(x[1])), ms=l.s.filter(x=>x[2]).map(x=>cm(x[2]));
+  const lo=hs.length?Math.min(...hs):(ms.length?Math.min(...ms):null);
+  if(lo==null) return "";
+  const g=lo-state.H;
+  return g<0?`比你的車矮 ${-g} 公分`:(g===0?`跟你的車一樣高，沒有空間`:`剩 ${g} 公分`);
+}
+function card(l){
+  const st=status(l), lt=lowText(l);
+  const onlyNews=l.s.length && l.s.every(x=>D.src[x[0]]==="新聞報導");
+  return `<article class="item">
+    <div class="top"><div style="min-width:0"><h3>${esc(l.n)}</h3><div class="meta">${esc(l.c)} ${esc(l.d)}${l.v?"｜"+esc(l.v):""}${l.a?"｜"+esc(l.a):""}</div></div>
+    <div class="lim">${lt.v}<small>${lt.sub}</small></div></div>
+    <div>${dTxt(l.la,l.ln)?dTxt(l.la,l.ln)+" ":""}<span class="pill p-${st}">${ST[st]}</span> <span class="meta">${gap(l)}</span>${onlyNews?' <span class="pill p-unk">只有新聞來源</span>':""}${isRent(l)?' <span class="pill p-unk">月租專用</span>':(l.r&&l.r[0]===2?' <span class="pill p-unk">可能只收月租</span>':"")}</div>
+    <ul class="srcs">${srcList(l)}${rentLine(l)}</ul>
+    <div class="links"><a href="${gm(l.la,l.ln)}" target="_blank" rel="noopener">Google 地圖</a><a href="${sv(l.la,l.ln)}" target="_blank" rel="noopener">看街景</a></div>
+  </article>`;
+}
+function roadCard(r){
+  const st=roadStatus(r); const kind=["新北市交通局限高標誌","台北市地下道結構淨高（不是限高牌）","台北市隧道限高","OpenStreetMap 網友標註（未經官方確認）"][r[5]];
+  return `<article class="item">
+    <div class="top"><div style="min-width:0"><h3>${esc(r[1])}</h3><div class="meta">${esc(r[7])} ${esc(r[0])}｜道路限高</div></div><div class="lim">${r[2]}<small>公尺</small></div></div>
+    <div>${dTxt(r[3],r[4])?dTxt(r[3],r[4])+" ":""}<span class="pill p-${st}">${ST[st]}</span> <span class="meta">${cm(r[2])-state.H<0?`比你的車矮 ${state.H-cm(r[2])} 公分`:(cm(r[2])===state.H?`跟你的車一樣高，沒有空間`:`剩 ${cm(r[2])-state.H} 公分`)}</span></div>
+    <ul class="srcs"><li><span class="v">${r[2]} m</span><span class="w">${kind}${r[6]?"｜附牌："+esc(r[6]):""}${r[8]?` <a href="${esc(r[8])}" target="_blank" rel="noopener">來源</a>`:""}</span></li></ul>
+    <div class="links"><a href="${gm(r[3],r[4])}" target="_blank" rel="noopener">Google 地圖</a><a href="${sv(r[3],r[4])}" target="_blank" rel="noopener">看街景</a></div>
+  </article>`;
+}
+function unkCard(u){
+  return `<article class="item"><h3>${esc(u[0])}</h3><div class="meta">${esc(u[1])} ${esc(u[2])}｜${esc(u[3])}</div>
+    <div>${dTxt(u[4],u[5])?dTxt(u[4],u[5])+" ":""}<span class="pill p-unk">查不到限高資料</span>${u[7]?' <span class="pill p-unk">月租專用</span>':""}</div>
+    <p class="meta">官方和業者都沒有公布這座停車場的限高，所以這裡沒有數字。</p>
+    <p class="meta">型態：${esc(u[6])}（依登記資料或名稱判斷）｜停車場名單來源：${esc(u[8])}</p>
+    <div class="links"><a href="${gm(u[4],u[5])}" target="_blank" rel="noopener">Google 地圖</a><a href="${sv(u[4],u[5])}" target="_blank" rel="noopener">看街景</a></div></article>`;
+}
+
+// ---- 地圖（MapLibre，街道與河川鐵路來自 OpenStreetMap） ----
+const base=location.href.replace(/[#?].*$/,"").replace(/[^/]*$/,"");
+const C=k=>css(k);
+const DARK=matchMedia("(prefers-color-scheme: dark)").matches;
+const glyphP=fetch(base+"glyphs.json").then(r=>r.json());
+maplibregl.addProtocol("glyphs",async(params)=>{
+  const g=await glyphP; const range=params.url.split("/").pop();
+  const b64=g[range];
+  if(!b64) return {data:new ArrayBuffer(0)};
+  const bin=atob(b64); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+  return {data:u.buffer};
+});
+const map=new maplibregl.Map({
+  container:"map", center:[121.535,25.045], zoom:12, hash:true, minZoom:8, maxZoom:18,
+  localIdeographFontFamily:'"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif',
+  attributionControl:false,
+  style:{version:8, glyphs:"glyphs://{fontstack}/{range}",
+    sources:{
+      nlsc:{type:"raster",tiles:["https://wmts.nlsc.gov.tw/wmts/EMAP6_OPENDATA/default/GoogleMapsCompatible/{z}/{y}/{x}"],tileSize:256,maxzoom:15},
+      towns:{type:"geojson",data:base+"towns.geojson"},
+      lines:{type:"geojson",data:base+"lines.geojson"},
+      major:{type:"geojson",data:base+"roads_major.geojson"},
+      detail:{type:"geojson",data:{type:"FeatureCollection",features:[]}},
+      lots:{type:"geojson",data:{type:"FeatureCollection",features:[]}},
+      rlim:{type:"geojson",data:{type:"FeatureCollection",features:[]}},
+      unk:{type:"geojson",data:{type:"FeatureCollection",features:[]}},
+      dest:{type:"geojson",data:{type:"FeatureCollection",features:[]}}
+    },
+    layers:[
+      {id:"bg",type:"background",paint:{"background-color":C("--map")}},
+      {id:"nlsc",type:"raster",source:"nlsc",maxzoom:16.2,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],15.4,1,16.2,0],"raster-brightness-max":DARK?0.72:1,"raster-saturation":DARK?-0.35:0}},
+      {id:"town-fill",type:"fill",source:"towns",minzoom:15.3,paint:{"fill-color":C("--land"),"fill-opacity":["interpolate",["linear"],["zoom"],15.3,0,16,1]}},
+      {id:"town-line",minzoom:15.3,type:"line",source:"towns",paint:{"line-color":C("--border"),"line-width":["interpolate",["linear"],["zoom"],9,.6,14,1.4],"line-dasharray":[3,2]}},
+      {id:"river",minzoom:15.3,type:"line",source:"lines",filter:["==",["get","t"],"w"],paint:{"line-color":C("--water"),"line-width":["interpolate",["linear"],["zoom"],9,1.2,15,6]}},
+      {id:"d-minor-case",minzoom:15.3,type:"line",source:"detail",filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],13,2.2,17,11]}},
+      {id:"d-minor",minzoom:15.3,type:"line",source:"detail",filter:[">=",["get","k"],5],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road"),"line-width":["interpolate",["linear"],["zoom"],12,.6,13,1.4,17,9]}},
+      {id:"d-mid-case",minzoom:15.3,type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],11,1.6,17,14]}},
+      {id:"d-mid",minzoom:15.3,type:"line",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-mid"),"line-width":["interpolate",["linear"],["zoom"],11,.9,17,12]}},
+      {id:"rail",minzoom:15.3,type:"line",source:"lines",filter:["!=",["get","t"],"w"],paint:{"line-color":C("--rail"),"line-width":["interpolate",["linear"],["zoom"],9,.8,15,2.2],"line-dasharray":[2,1.5]}},
+      {id:"m-case",minzoom:15.3,type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":C("--road-case"),"line-width":["interpolate",["linear"],["zoom"],8,1.2,12,4,17,18]}},
+      {id:"m-fill",minzoom:15.3,type:"line",source:"major",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":["match",["get","k"],0,C("--road-hwy"),1,C("--road-hwy"),C("--road-major")],"line-width":["interpolate",["linear"],["zoom"],8,.6,12,2.6,17,15]}},
+      {id:"lbl-minor",minzoom:15.3,type:"symbol",source:"detail",filter:[">=",["get","k"],5],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],15,10.5,18,13],"text-max-angle":35,"symbol-spacing":260},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.6}},
+      {id:"lbl-mid",minzoom:15.3,type:"symbol",source:"detail",filter:["all",[">=",["get","k"],3],["<=",["get","k"],4]],layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],13.5,11,18,14],"text-max-angle":35,"symbol-spacing":300},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":1.8}},
+      {id:"lbl-major",minzoom:15.3,type:"symbol",source:"major",layout:{"symbol-placement":"line","text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":["interpolate",["linear"],["zoom"],11.5,11,18,15],"text-max-angle":35,"symbol-spacing":350},paint:{"text-color":C("--label"),"text-halo-color":C("--halo"),"text-halo-width":2}},
+      {id:"town-lbl",type:"symbol",source:"towns",maxzoom:0,layout:{"text-field":["get","t"],"text-font":["NotoSansRegular"],"text-size":12,"symbol-placement":"point"},paint:{"text-color":C("--muted"),"text-halo-color":C("--halo"),"text-halo-width":1.5}},
+      {id:"dest-fill",type:"fill",source:"dest",filter:["==",["geometry-type"],"Polygon"],paint:{"fill-color":C("--p"),"fill-opacity":.07}},
+      {id:"dest-line",type:"line",source:"dest",filter:["==",["geometry-type"],"Polygon"],paint:{"line-color":C("--p"),"line-width":2,"line-dasharray":[3,2]}},
+      {id:"unk",type:"circle",source:"unk",minzoom:12,paint:{"circle-radius":["interpolate",["linear"],["zoom"],12,2.5,16,6],"circle-color":["case",["==",["get","f"],1],C("--land"),C("--unk")],"circle-stroke-color":C("--unk"),"circle-stroke-width":1.4,"circle-opacity":.9}},
+      {id:"rlim",type:"circle",source:"rlim",paint:{"circle-radius":["interpolate",["linear"],["zoom"],10,3.5,16,8],"circle-color":["get","col"],"circle-stroke-color":C("--road-pin"),"circle-stroke-width":2.5}},
+      {id:"lots",type:"circle",source:"lots",paint:{"circle-radius":["interpolate",["linear"],["zoom"],10,4.5,16,10],"circle-color":["get","col"],"circle-stroke-color":C("--pin-edge"),"circle-stroke-width":1.4}},
+      {id:"dest-pt",type:"circle",source:"dest",filter:["==",["geometry-type"],"Point"],paint:{"circle-radius":9,"circle-color":C("--p"),"circle-stroke-color":"#ffffff","circle-stroke-width":3}},
+      {id:"dest-lbl",type:"symbol",source:"dest",filter:["==",["geometry-type"],"Point"],layout:{"text-field":["get","n"],"text-font":["NotoSansRegular"],"text-size":13,"text-offset":[0,1.4],"text-anchor":"top"},paint:{"text-color":C("--p"),"text-halo-color":C("--halo"),"text-halo-width":2}}
+    ]}
+});
+map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-left");
+map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'底圖 © <a href="https://maps.nlsc.gov.tw/" target="_blank" rel="noopener">內政部國土測繪中心</a> 臺灣通用電子地圖 OpenData（政府資料開放授權條款）｜街區街道與地點搜尋 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 貢獻者</a>（ODbL）'}),"bottom-right");
+
+const loaded=new Set(), loading=new Set(); let detailFeats=[];
+function wantDetail(){
+  if(map.getZoom()<15) return;
+  const b=map.getBounds();
+  for(const [k,bb] of Object.entries(BBOX)){
+    if(loaded.has(k)||loading.has(k)) continue;
+    if(bb[0]>b.getEast()||bb[2]<b.getWest()||bb[1]>b.getNorth()||bb[3]<b.getSouth()) continue;
+    loading.add(k);
+    fetch(base+`roads_${k}.geojson`).then(r=>r.json()).then(g=>{
+      detailFeats=detailFeats.concat(g.features.filter(f=>f.properties.k>=3));
+      map.getSource("detail").setData({type:"FeatureCollection",features:detailFeats});
+      loaded.add(k); loading.delete(k);
+    }).catch(()=>loading.delete(k));
+  }
+}
+map.on("moveend",wantDetail);
+
+const pop=new maplibregl.Popup({maxWidth:"330px",closeButton:true});
+function bindClick(layer,fn){
+  map.on("click",layer,e=>{ if(state.picking) return; const f=e.features[0]; pop.setLngLat(f.geometry.coordinates).setHTML(fn(f.properties.i)).addTo(map);});
+  map.on("mouseenter",layer,()=>map.getCanvas().style.cursor="pointer");
+  map.on("mouseleave",layer,()=>map.getCanvas().style.cursor="");
+}
+bindClick("lots",i=>card(D.lots[i])); bindClick("rlim",i=>roadCard(D.roads[i])); bindClick("unk",i=>unkCard(D.unk[i]));
+
+function inCty(c){return state.cty.has(c)}
+function match(text){return !state.q || text.toLowerCase().includes(state.q)}
+function pt(la,ln,props){return {type:"Feature",geometry:{type:"Point",coordinates:[ln,la]},properties:props}}
+let current=[], mapReady=false, extraUnk=0;
+function render(){
+  if(!D) return;
+  try{localStorage.setItem("hlim",JSON.stringify({H:state.H,M:state.M}))}catch(e){}
+  const counts={no:0,maybe:0,mech:0,tight:0,ok:0};
+  const fl=[], fr=[], fu=[]; const rows=[];
+  D.lots.forEach((l,i)=>{
+    if(!inCty(l.c)) return;
+    if(isRent(l)&&!state.rent) return;
+    const dd=dTo(l.la,l.ln); if(dd!=null&&dd>state.R) return;
+    const st=status(l); counts[st]++;
+    if(!state.show.has(st)) return;
+    fl.push(pt(l.la,l.ln,{i,st,col:C("--"+st)}));
+    const text=(l.n+l.d+l.a+(l.v||"")+l.s.map(x=>x[5]).join("")).toLowerCase();
+    if(match(text)) rows.push({t:"lot",st,o:l,k:lowKey(l),d:dd});
+  });
+  if(state.road) D.roads.forEach((r,i)=>{
+    if(!inCty(r[7])) return;
+    const st=roadStatus(r); if(!state.show.has(st)) return;
+    if(st==="ok" && cm(r[2])>state.H+60) return;
+    const dr=dTo(r[3],r[4]); if(dr!=null&&dr>state.R) return;
+    fr.push(pt(r[3],r[4],{i,col:C("--"+st)}));
+    if(match((r[0]+r[1]).toLowerCase())) rows.push({t:"road",st,o:r,k:cm(r[2]),d:dr});
+  });
+  if(state.unk) D.unk.forEach((u,i)=>{ if(!inCty(u[1])) return; if(u[7]&&!state.rent) return; const du=dTo(u[4],u[5]); if(du!=null&&du>state.R) return; fu.push(pt(u[4],u[5],{i,f:u[6]==="平面式"?1:0}));
+    if((state.q||state.dest) && match((u[0]+u[2]+u[3]).toLowerCase())) rows.push({t:"unk",st:"unk",o:u,k:999,d:du}); });
+  if(mapReady){
+    map.getSource("lots").setData({type:"FeatureCollection",features:fl});
+    map.getSource("rlim").setData({type:"FeatureCollection",features:fr});
+    map.getSource("unk").setData({type:"FeatureCollection",features:fu});
+  }
+  drawFilters();
+  rows.sort((a,b)=>(a.st==="unk")-(b.st==="unk")||ORDER.indexOf(a.st)-ORDER.indexOf(b.st)||(state.dest?a.d-b.d:a.k-b.k));
+  extraUnk=0;
+  if(state.dest && !state.unk) D.unk.forEach(u=>{ if(!inCty(u[1])) return; if(u[7]&&!state.rent) return; if(dTo(u[4],u[5])<=state.R) extraUnk++; });
+  current=rows; drawList();
+}
+const LAYERS=[{k:"road",t:"道路與地下道限高",dot:"background:var(--panel);border:2.5px solid var(--road-pin)"},{k:"unk",t:"查不到限高資料的停車場",s:"官方和業者都沒有公布限高",dot:"background:var(--unk)"},{k:"rent",t:"月租專用停車場",s:"不開放臨停",dot:"background:var(--unk-bg);border:1.5px dashed var(--unk)"}];
+const PRESET=[["只看可以停的（預設）",["ok"],{}],["也看要避開的",["ok","no","maybe","mech","tight"],{}],["全部打開",["ok","no","maybe","mech","tight"],{road:true,unk:true,rent:true}]];
+function drawFilters(){
+  $("tiles").innerHTML=ORDER.map(k=>`<button class="tile" type="button" data-k="${k}" style="--c:var(--${k});--cb:var(--${k}-bg)" aria-pressed="${state.show.has(k)}"><span class="t"><i class="ck">${state.show.has(k)?"✓":""}</i>${ST[k]}</span><span class="d">${HINT[k]}</span></button>`).join("");
+  $("layers").innerHTML=LAYERS.map(x=>`<button class="lyb" type="button" data-ly="${x.k}" aria-pressed="${state[x.k]}"><i class="ck">${state[x.k]?"✓":""}</i><i class="dot" style="${x.dot}"></i>${x.t}${x.s?`<small>（${x.s}）</small>`:""}</button>`).join("");
+  const cur=JSON.stringify([[...state.show].sort(),state.road,state.unk,state.rent]);
+  $("quick").innerHTML=PRESET.map((p,i)=>{const mine=JSON.stringify([[...p[1]].sort(),!!p[2].road,!!p[2].unk,!!p[2].rent]); return `<button class="qb" type="button" data-p="${i}" aria-current="${mine===cur}">${p[0]}</button>`}).join("");
+  const lg=ORDER.filter(k=>state.show.has(k)).map(k=>`<span><i class="dot" style="background:var(--${k})"></i>${ST[k]}</span>`);
+  if(state.road) lg.push(`<span><i class="dot" style="background:var(--panel);border:2.5px solid var(--road-pin)"></i>道路限高</span>`);
+  if(state.unk) lg.push(`<span><i class="dot" style="background:var(--unk)"></i>查不到限高資料（室內／地下）</span><span><i class="dot" style="background:var(--land);border:1.5px solid var(--unk)"></i>查不到限高資料（平面式）</span>`);
+  $("legend").innerHTML=lg.join("");
+}
+function lowKey(l){const hs=l.s.filter(x=>x[1]).map(x=>cm(x[1])), ms=l.s.filter(x=>x[2]).map(x=>cm(x[2])); return hs.length?Math.min(...hs):(ms.length?Math.min(...ms):999)}
+function drawList(){
+  const n=current.length;
+  const rng=state.dest?`${state.dest.n} 方圓 ${state.R>=1000?state.R/1000+" 公里":state.R+" 公尺"}：`:"";
+  $("listTitle").textContent=rng+((state.show.size===1&&state.show.has("ok"))?`車高 ${state.H} 公分可以停的停車場`:`車高 ${state.H} 公分的清單`);
+  $("count").textContent=n?`共 ${n} 筆（停車場與道路），${state.dest?"依狀況與距離由近到遠排列。":"依狀況與限高由低到高排列。"}要看進不去或空間不夠的，在上方「顯示項目」點開。${state.rent?"":"月租專用的停車場已先隱藏。"}`:"";
+  if(extraUnk) $("count").textContent+=`範圍內另外還有 ${extraUnk} 座停車場查不到限高資料，想看位置可以打開「查不到限高資料的停車場」。`;
+  $("list").innerHTML=n?current.slice(0,state.limit).map(r=>r.t==="lot"?card(r.o):(r.t==="road"?roadCard(r.o):unkCard(r.o))).join(""):`<p class="empty">這個條件下沒有結果。可以在上方「顯示項目」打開其他類別，或調整縣市。</p>`;
+  $("more").hidden=n<=state.limit;
+}
+
+$("cty").innerHTML=COUNTIES.map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="true">${c}</button>`).join("");
+$("cty").addEventListener("click",e=>{const b=e.target.closest(".chip"); if(!b) return; const c=b.dataset.c;
+  if(state.cty.has(c)&&state.cty.size>1){state.cty.delete(c)} else state.cty.add(c);
+  document.querySelectorAll("#cty .chip").forEach(x=>x.setAttribute("aria-pressed",state.cty.has(x.dataset.c))); state.limit=60; render();});
+document.querySelector(".filters").addEventListener("click",e=>{
+  const p=e.target.closest(".qb"); if(p){const P=PRESET[p.dataset.p]; state.show=new Set(P[1]); state.road=!!P[2].road; state.unk=!!P[2].unk; state.rent=!!P[2].rent; state.limit=60; render(); return;}
+  const tl=e.target.closest(".tile"); if(tl){const k=tl.dataset.k; state.show.has(k)?state.show.delete(k):state.show.add(k); state.limit=60; render(); return;}
+  const ly=e.target.closest(".lyb"); if(ly){const k=ly.dataset.ly; state[k]=!state[k]; render();}
+});
+let t; $("h").addEventListener("input",()=>{clearTimeout(t); t=setTimeout(()=>{const v=parseInt($("h").value,10); if(v>=120&&v<=400){state.H=v; state.limit=60; render();}},250)});
+$("m").addEventListener("change",()=>{state.M=parseInt($("m").value,10); render();});
+$("q").addEventListener("input",()=>{clearTimeout(t); t=setTimeout(()=>{state.q=$("q").value.trim().toLowerCase(); state.limit=60; render();},200)});
+$("more").addEventListener("click",()=>{state.limit+=60; drawList();});
+
+map.on("load",()=>{ mapReady=true; render(); wantDetail(); });
+// ---- 目的地搜尋（地標與路名索引來自 OpenStreetMap，在頁面內比對，不連外部服務） ----
+let GAZ=null; const loadGaz=()=>GAZ||(GAZ=fetch(base+"gaz.json").then(r=>r.json()));
+const nz=s=>String(s||"").replace(/臺/g,"台").replace(/\s/g,"").toLowerCase();
+const CN=["","一","二","三","四","五","六","七","八","九","十"];
+const RANK={"百貨":0,"商場":0,"車站":0,"機場":0,"航廈":0,"醫院":0.2,"大學":0.4,"量販":0.3,"超市":0.6,"景點":0.4,"博物館":0.4,"展覽館":0.3,"體育場":0.4,"運動中心":0.5,"公園":0.6,"飯店":0.7,"轉運站":0.3,"樂園":0.3,"動物園":0.3};
+async function suggest(q){
+  const g=await loadGaz(); const k=nz(q); if(!k) return [];
+  const out=[];
+  for(const p of g.p){
+    const n=nz(p[0]), a=nz(p[4]||"");
+    let s=n===k?0:n.startsWith(k)?1:n.includes(k)?2:(a&&a.includes(k))?2.5:-1;
+    if(s<0) continue; if(/(路|街|大道)$/.test(p[0])&&p[3]!=="車站") s+=2; s+=(RANK[p[3]]??0.9)+n.length/100; out.push({s,n:p[0],la:p[1],ln:p[2],t:p[3]});
+  }
+  let qa=q.replace(/臺/g,"台").replace(/\s/g,"");
+  const qc=(qa.match(/^(台北市|新北市|桃園市|基隆市|宜蘭縣)/)||[])[1]||""; qa=qa.slice(qc.length);
+  let qd=""; const dm=qa.match(/^([\u4e00-\u9fff]{2,3}(?:區|鄉|鎮|市))(.+)$/); if(dm && /(路|街|大道)/.test(dm[2])){qd=dm[1]; qa=dm[2];}
+  const m=qa.match(/([\u4e00-\u9fff]{1,8}?(?:路|街|大道))\s*(?:([0-9一二三四五六七八九十]+)段)?/);
+  if(m){
+    let seg=m[2]||""; if(/^\d+$/.test(seg)) seg=CN[+seg]||seg;
+    const want=nz(m[1]+(seg?seg+"段":""));
+    for(const r of g.r){ if(qc&&!r[3].startsWith(qc)) continue; const n=nz(r[0]); if(n===want||(!seg&&n.startsWith(nz(m[1])))) out.push({s:(n===want?-0.5:1.5)+(qd&&!r[3].includes(qd)?1:0),n:r[0],la:r[1],ln:r[2],t:"道路｜"+r[3],road:true,approx:/號/.test(q)}); }
+  }
+  out.sort((a,b)=>a.s-b.s);
+  return out.slice(0,10);
+}
+let sugs=[], sel=-1, tq;
+function showSug(list){
+  sugs=list; sel=-1;
+  $("dsug").innerHTML=list.length?list.map((x,i)=>`<li role="option" data-i="${i}"><span>${esc(x.n)}</span><small>${esc(x.t)}</small></li>`).join(""):`<li class="none">找不到這個地點，可以換個說法，或按「在地圖上點選」</li>`;
+  $("dsug").hidden=false;
+}
+$("dq").addEventListener("focus",()=>loadGaz());
+$("dq").addEventListener("input",()=>{clearTimeout(tq); const q=$("dq").value.trim(); if(!q){$("dsug").hidden=true; return;} tq=setTimeout(async()=>showSug(await suggest(q)),180);});
+$("dq").addEventListener("keydown",e=>{
+  if($("dsug").hidden) return;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault(); sel=(sel+(e.key==="ArrowDown"?1:-1)+sugs.length)%sugs.length; [...$("dsug").children].forEach((li,i)=>li.setAttribute("aria-selected",i===sel));}
+  else if(e.key==="Enter"){e.preventDefault(); const x=sugs[sel>=0?sel:0]; if(x) pickSug(x);}
+  else if(e.key==="Escape"){$("dsug").hidden=true;}
+});
+$("dsug").addEventListener("click",e=>{const li=e.target.closest("li[data-i]"); if(li) pickSug(sugs[+li.dataset.i]);});
+document.addEventListener("click",e=>{if(!e.target.closest(".dbox")) $("dsug").hidden=true;});
+function pickSug(x){ $("dq").value=x.n; $("dsug").hidden=true; setDest({n:x.n,lat:x.la,lng:x.ln,approx:x.road}); }
+function circle(lat,lng,R){const pts=[];for(let i=0;i<=64;i++){const a=i/64*2*Math.PI;pts.push([lng+R*Math.sin(a)/(111320*Math.cos(lat*Math.PI/180)),lat+R*Math.cos(a)/110540]);}return pts}
+function setDest(d){
+  if(!mapReady){ map.once("load",()=>setDest(d)); return; }
+  state.dest=d?{n:d.n,lat:d.lat,lng:d.lng,approx:d.approx}:null; state.limit=60;
+  $("dclear").hidden=!state.dest;
+  if(state.dest){
+    const ring=circle(d.lat,d.lng,state.R);
+    map.getSource("dest").setData({type:"FeatureCollection",features:[{type:"Feature",geometry:{type:"Polygon",coordinates:[ring]},properties:{}},{type:"Feature",geometry:{type:"Point",coordinates:[d.lng,d.lat]},properties:{n:d.n}}]});
+    const xs=ring.map(p=>p[0]), ys=ring.map(p=>p[1]);
+    map.fitBounds([[Math.min(...xs),Math.min(...ys)],[Math.max(...xs),Math.max(...ys)]],{padding:30,duration:600});
+    $("dnote").innerHTML=d.approx?"門牌號碼沒辦法精準定位，目前定位在<b>這條路段的中間</b>；想更準可以按「在地圖上點選」。":`已定位到<b>${esc(d.n)}</b>，地圖和清單只列出這個範圍內的停車場。`;
+  } else {
+    map.getSource("dest").setData({type:"FeatureCollection",features:[]});
+    $("dnote").textContent="還沒選目的地時，會顯示五縣市全部的停車場。門牌地址沒辦法精準定位，可以輸入路名，或直接在地圖上點選。";
+  }
+  render();
+}
+$("dr").addEventListener("change",()=>{state.R=+$("dr").value; if(state.dest) setDest({...state.dest}); });
+$("dclear").addEventListener("click",()=>{$("dq").value=""; setDest(null);});
+$("dpick").addEventListener("click",()=>{state.picking=!state.picking; $("dpick").setAttribute("aria-pressed",state.picking); map.getCanvas().style.cursor=state.picking?"crosshair":""; if(state.picking){$("dnote").innerHTML="<b>請在地圖上點一下目的地。</b>"; document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});}});
+map.on("click",e=>{ if(!state.picking) return; state.picking=false; $("dpick").setAttribute("aria-pressed","false"); map.getCanvas().style.cursor=""; pop.remove(); $("dq").value=""; setDest({n:"地圖上選的位置",lat:e.lngLat.lat,lng:e.lngLat.lng}); });
+try{ new ResizeObserver(()=>map.resize()).observe(document.getElementById("map")); }catch(e){ addEventListener("resize",()=>map.resize()); }
+fetch(base+"data.json").then(r=>r.json()).then(d=>{ D=d; $("upd").textContent=d.updated; render(); })
+  .catch(err=>{$("count").textContent="資料載入失敗，請重新整理頁面。（"+err.message+"）"});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>location.reload());
+</script>
+
+
+</body>
+</html>
